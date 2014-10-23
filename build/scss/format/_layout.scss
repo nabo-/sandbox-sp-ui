@@ -1,0 +1,45 @@
+@charset "utf-8";
+
+
+
+.l-column {
+	@include display-box;
+}
+.l-column__even {
+	width: 100%;
+	@include box-sizing(border-box);
+	@include box-flex(1);
+}
+.l-column__main {
+	@include box-flex(5);
+}
+.l-column__sub {
+	margin-left: 8px;
+}
+.l-column__main_right {
+	@include box-ordinal-group(2);
+}
+.l-column__sub_left {
+	margin-right:8px;
+	margin-left: 0;
+	@include box-ordinal-group(1);
+}
+.l-column_align_c {
+	@include box-align(center);
+}
+.l-column_pack_c {
+	@include box-pack(center);
+}
+.l-orient {
+	@include display-box;
+	@include box-orient(block-axis);
+}
+.l-orient__group1 {
+	@include box-ordinal-group(1);
+}
+.l-orient__group2 {
+	@include box-ordinal-group(2);
+}
+.l-orient__group3 {
+	@include box-ordinal-group(3);
+}

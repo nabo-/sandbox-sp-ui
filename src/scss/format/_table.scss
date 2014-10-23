@@ -1,0 +1,80 @@
+@charset "utf-8";
+
+
+.tblMd {
+	width:100%;
+	@include box-sizing(border-box);
+	tr {
+		border-bottom: dotted 1px #9F9F9F;
+		&:last-child{
+			border-bottom: none;
+		}
+	}
+	th {
+		padding: 0.3em 8px;
+		background-color: #F4F3F1;
+	}
+	td {
+		padding: 0.3em 8px;
+		background-color: #fff;
+	}
+}
+.tblMd_valign_top {
+	th,td {
+		vertical-align: top;
+	}
+}
+.tblMd_fixed {
+	table-layout: fixed;
+}
+.tblMd_th_w01 {
+	width: 84px;
+}
+.tblMd_th_w02 {
+	width: 45px;
+}
+
+.tblMd_type1 {
+	border-top: solid 1px #ccc;
+	border-bottom: solid 1px #ccc;
+}
+
+.tblMd_type2 {
+	border: solid 1px #ccc;
+	font-size: $font_ss;
+	line-height: 16px;
+	th {
+		text-align: center;
+		padding: 0.3em 0px;
+		color:#444;
+	}
+	td {
+		text-align: center;
+		padding: 0.3em 0px;
+		border-right: solid 1px #ccc;
+		color:#444;
+	}
+	tr {
+		border-bottom: solid 1px #ccc;
+		td {
+			&:last-child {
+				border-right: none;
+			}
+		}
+	}
+}
+
+.tblMd_type3 {
+	border: solid 1px #ccc;
+}
+
+.tblMd_type4 {
+	border: solid 1px #ccc;
+	th {
+		background-color: #fff;
+	}
+}
+
+.titleMd_type_1 + .tblMd_type1 {
+	border-top: none;
+}

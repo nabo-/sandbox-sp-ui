@@ -1,0 +1,1 @@
+var PullHeadImage;!function(a){var b=function(){function a(){this.ready()}return a.prototype.ready=function(){$("body").append('<div id="pullHeadImageBg"></div>')},a}();a.App=b}(PullHeadImage||(PullHeadImage={})),function(){new PullHeadImage.App}();

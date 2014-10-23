@@ -1,0 +1,101 @@
+@charset "utf-8";
+
+.numberItems {
+	display: inline-block;
+	border-radius: 8px;
+	padding: 4px 7px;
+	background-color: #E9E6E2;
+	color: #777;
+}
+.numberItems_circle {
+	border-radius:50%;
+	width:20px;
+	height:20px;
+	padding:4px;
+	@include display-box;
+	@include box-align(center);
+	text-align:center;
+	span {
+		@include box-flex(1);
+		display: block;
+	}
+}
+.numberItems_color_1 {
+	background-color: #fff;
+}
+
+.numberRank {
+	display: inline-block;
+	vertical-align: bottom;
+	border-radius: 3px;
+	padding: 0.1em 0.3em;
+	font-weight: bold;
+	color: #fff;
+}
+.numberRank_color_1 {
+	background-color: #ED655C;
+}
+.numberRank_color_2 {
+	background-color: #FEAC5A;
+}
+.numberRank_color_3 {
+	background-color: #AEA396;
+}
+.numberRank_color_4 {
+	background-color: #9f9f9f;
+}
+.numberRank_color_5 {
+	background-color: #7d7d7d;
+}
+
+.statusLabel {
+	display: inline-block;
+	vertical-align: bottom;
+	border-radius: 3px;
+	padding:0.1em 0.5em 0;
+	background-color: #E9E6E2;
+	color: #777;
+}
+.statusLabel_color_1 {
+	color: #fff;
+	background-color: #DFC574;
+}
+.statusLabel_color_2 {
+	color: #aaa;
+	background-color: #F6F6F6;
+}
+.statusLabel_color_3 {
+	color: #F93;
+	background-color: #fff;
+	border: solid 1px #F93;
+}
+.statusLabel_color_4 {
+	color: #C5AD90;
+	background-color: #fff;
+	border: solid 1px #C5AD90;
+}
+.statusLabel_color_5 {
+	color: #fff;
+	background-color: #9b8e7e;
+}
+.statusLabel_color_6 {
+	color: #fff;
+	background-color: #FF9225;
+}
+.statusLabel_color_7 {
+	color: #fff;
+	background-color: #C7A57A;
+}
+.statusLabel_color_8 {
+	color: #fff;
+	background-color: #dfc574;
+}
+.statusLabel_color_9 {
+	color: #fff;
+	background-color: #00b9f0;
+}
+.statusLabel_color_10 {
+	color:#ea4036;
+	background-color: #fff;
+	border: solid 1px #ea4036;
+}
