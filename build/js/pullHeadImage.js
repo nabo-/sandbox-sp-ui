@@ -3,15 +3,28 @@
 var PullHeadImage;
 (function (PullHeadImage) {
     var App = (function () {
-        function App() {
+        function App(target) {
+            this.target = target;
+            this.item = document.getElementById(target);
+            this.touchStartY = 0;
+            this.touchMoveY = 0;
+
             this.ready();
         }
-        // set object dom
         App.prototype.ready = function () {
+            var _this = this;
+
             $('body').append('<div id="pullHeadImageBg"></div>');
 
-            var test = new GetTouchCoord();
-            console.log(test.getDifferenceCoord());
+            _this.item.addEventListener('touchstart', function (event) {
+                _this.touchStartY = event.touches[0].pageY;
+                console.log(_this.touchStartY);
+            });
+
+            _this.item.addEventListener('touchmove', function (event) {
+                _this.touchMoveY = event.touches[0].pageY;
+                console.log(_this.touchMoveY);
+            });
         };
         return App;
     })();
@@ -20,28 +33,12 @@ var PullHeadImage;
     // touch start したらイベントが動かないとだめ
     // get touch start y
     var GetTouchCoord = (function () {
-        function GetTouchCoord() {
-            this.item = document.getElementById('pullHeadImage');
+        function GetTouchCoord(coordTouchStartY, coordTouchMoveY) {
+            this.coordTouchStartY = coordTouchStartY;
+            this.coordTouchMoveY = coordTouchMoveY;
         }
-        GetTouchCoord.prototype.touchStart = function () {
-            var _this = this;
-            this.item.addEventListener('touchstart', function (event) {
-                _this.touchStartY = event.touches[0].pageY;
-            });
-        };
-
-        GetTouchCoord.prototype.touchMove = function () {
-            var _this = this;
-            this.item.addEventListener('touchmove', function (event) {
-                _this.touchMoveY = event.touches[0].pageY;
-            });
-        };
-
         GetTouchCoord.prototype.getDifferenceCoord = function () {
-            this.touchStart();
-            this.touchMove();
-
-            var difference = this.touchMoveY - this.touchStartY;
+            var difference = this.coordTouchMoveY - this.coordTouchStartY;
             return difference;
         };
         return GetTouchCoord;
@@ -69,14 +66,10 @@ var PullHeadImage;
     })();
     PullHeadImage.OpacityController = OpacityController;
 })(PullHeadImage || (PullHeadImage = {}));
-
-(function () {
-    var app = new PullHeadImage.App();
-})();
 /// <reference path="definitions/jquery.d.ts" />
 /// <reference path="definitions/touchevent.d.ts" />
 /// <reference path="app.ts" />
 
 (function () {
-    var pullHeadImage = new PullHeadImage.App();
+    var pullHeadImage = new PullHeadImage.App('pullHeadImage');
 })();
