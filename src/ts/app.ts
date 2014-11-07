@@ -4,58 +4,80 @@
 
 module PullHeadImage {
 
+
 	export class App {
 
 		public item:any;
-		public touchStartY:number;
-		public touchMoveY:number;
 
-		constructor(
-				public target:string
-			){
-
-			this.item = document.getElementById(target);
-			this.touchStartY = 0;
-			this.touchMoveY = 0;
-
+		constructor(public targetId:string){
+			this.item = document.getElementById(targetId);
 			this.ready();
 		}
 
 		ready():void {
-
-			var _this = this;
-
+			var setTouchEvent = new SetTouchEvent(this.item);
 			$('body').append('<div id="pullHeadImageBg"></div>');
 
-			_this.item.addEventListener('touchstart', function(event){
-				_this.touchStartY = event.touches[0].pageY;
-				console.log(_this.touchStartY);
-				});
-
-			_this.item.addEventListener('touchmove', function(event){
-				_this.touchMoveY = event.touches[0].pageY;
-				console.log(_this.touchMoveY);
-				});
 		}
-
 	}
 
-	// touch start したらイベントが動かないとだめ
+	export class SetTouchEvent {
 
-	// get touch start y
-	export class GetTouchCoord {
+		public startY: number;
+		public moveY: number;
+		private timer:any;
 
-		constructor(
-			public coordTouchStartY:number,
-			public coordTouchMoveY:number
-			){}
+		constructor(public item:any){
+			this.item = item;
+			this.startY = 0;
+			this.moveY = 0;
 
-		getDifferenceCoord():number {
-			var difference:number = this.coordTouchMoveY - this.coordTouchStartY;
-			return difference;
+			this.set();
 		}
 
+		set():void {
+			this.touchStart();
+			this.touchMove();
+			this.touchEnd();
+		}
+
+		touchStart():void {
+			var _this = this;
+			this.item.addEventListener('touchstart', function(event){
+				_this.startY = event.touches[0].pageY;
+				_this.setTimer();
+			});
+		}
+		touchMove():void {
+			var _this = this;
+			this.item.addEventListener('touchmove', function(event){
+				_this.moveY = event.touches[0].pageY;
+			});
+		}
+		touchEnd():void {
+			var _this = this;
+			this.item.addEventListener('touchend', function(){
+				clearInterval(_this.timer);
+			});
+		}
+
+		getDifferCoord():number {
+			var coord = this.moveY - this.startY;
+			return coord;
+		}
+
+		setTimer():void {
+			var _this = this;
+			this.timer = setInterval(function(){
+
+						var coord = _this.getDifferCoord();
+						console.log(coord);
+
+						// 画像を動かすクラスを呼び出す
+						}, 100);
+		}
 	}
+
 
 
 
@@ -89,26 +111,5 @@ module PullHeadImage {
 
 	// close PhotoScreen mode
 
-
-
-
-
-	// export class PullController {
-	// 	private touchStartY:number;
-
-	// 	constructor(){
-	// 	}
-
-	// 	getTouchY():any {
-	// 		var touchStartY:number;
-	// 		var item = document.getElementById('pullHeadImage');
-
-	// 		item.addEventListener('touchstart', function(event){
-	// 			touchStartY = event.touches[0].pageY;
-	// 		});
-	// 		return touchStartY;
-	// 	}
-
-	// }
 
 }
