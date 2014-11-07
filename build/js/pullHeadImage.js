@@ -19,9 +19,9 @@ var PullHeadImage;
     var SetTouchEvent = (function () {
         function SetTouchEvent(item) {
             this.item = item;
-            this.item = item;
             this.startY = 0;
             this.moveY = 0;
+            this.differ = 0;
 
             this.set();
         }
@@ -33,20 +33,27 @@ var PullHeadImage;
 
         SetTouchEvent.prototype.touchStart = function () {
             var _this = this;
-            this.item.addEventListener('touchstart', function (event) {
-                _this.startY = event.touches[0].pageY;
+
+            this.item.addEventListener('touchstart', function (e) {
+                _this.startY = e.changedTouches[0].pageY;
                 _this.setTimer();
             });
         };
+
         SetTouchEvent.prototype.touchMove = function () {
             var _this = this;
-            this.item.addEventListener('touchmove', function (event) {
-                _this.moveY = event.touches[0].pageY;
+
+            this.item.addEventListener('touchmove', function (e) {
+                //event.preventDefault();
+                _this.moveY = e.changedTouches[0].pageY;
             });
         };
+
         SetTouchEvent.prototype.touchEnd = function () {
             var _this = this;
-            this.item.addEventListener('touchend', function () {
+            var page = document.getElementById('page');
+
+            page.addEventListener('touchend', function (e) {
                 clearInterval(_this.timer);
             });
         };
@@ -58,15 +65,25 @@ var PullHeadImage;
 
         SetTouchEvent.prototype.setTimer = function () {
             var _this = this;
+
             this.timer = setInterval(function () {
-                var coord = _this.getDifferCoord();
-                console.log(coord);
+                _this.differ = _this.getDifferCoord();
+                console.log(_this.differ);
+                OpacityController.set(_this.differ);
                 // 画像を動かすクラスを呼び出す
             }, 100);
         };
         return SetTouchEvent;
     })();
     PullHeadImage.SetTouchEvent = SetTouchEvent;
+
+    var DisplayImage = (function () {
+        function DisplayImage(coord) {
+            this.coord = coord;
+        }
+        return DisplayImage;
+    })();
+    PullHeadImage.DisplayImage = DisplayImage;
 
     // get touch move y
     // get moveY - startY
@@ -82,8 +99,18 @@ var PullHeadImage;
     var OpacityController = (function () {
         function OpacityController() {
         }
-        OpacityController.prototype.set = function (num) {
-            $('pullHeadImageBg').css('opacity', num);
+        OpacityController.set = function (differ) {
+            var opacitySize = (differ / 150);
+            if (opacitySize < 0) {
+                return;
+            }
+
+            $('#pullHeadImageBg').show();
+
+            if (opacitySize > 0.85) {
+                opacitySize = 1;
+            }
+            $('#pullHeadImageBg').css('opacity', opacitySize);
         };
         return OpacityController;
     })();

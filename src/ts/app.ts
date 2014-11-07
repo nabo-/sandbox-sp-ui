@@ -6,9 +6,7 @@ module PullHeadImage {
 
 
 	export class App {
-
-		public item:any;
-
+		public item:any
 		constructor(public targetId:string){
 			this.item = document.getElementById(targetId);
 			this.ready();
@@ -25,12 +23,13 @@ module PullHeadImage {
 
 		public startY: number;
 		public moveY: number;
+		public differ : number;
 		private timer:any;
 
 		constructor(public item:any){
-			this.item = item;
 			this.startY = 0;
 			this.moveY = 0;
+			this.differ = 0;
 
 			this.set();
 		}
@@ -43,20 +42,27 @@ module PullHeadImage {
 
 		touchStart():void {
 			var _this = this;
-			this.item.addEventListener('touchstart', function(event){
-				_this.startY = event.touches[0].pageY;
+
+			this.item.addEventListener('touchstart', function(e){
+				_this.startY = e.changedTouches[0].pageY;
 				_this.setTimer();
 			});
 		}
+
 		touchMove():void {
 			var _this = this;
-			this.item.addEventListener('touchmove', function(event){
-				_this.moveY = event.touches[0].pageY;
+
+			this.item.addEventListener('touchmove', function(e){
+				//event.preventDefault();
+				_this.moveY = e.changedTouches[0].pageY;
 			});
 		}
+
 		touchEnd():void {
 			var _this = this;
-			this.item.addEventListener('touchend', function(){
+			var page = document.getElementById('page');
+
+			page.addEventListener('touchend', function(e){
 				clearInterval(_this.timer);
 			});
 		}
@@ -68,10 +74,12 @@ module PullHeadImage {
 
 		setTimer():void {
 			var _this = this;
+
 			this.timer = setInterval(function(){
 
-						var coord = _this.getDifferCoord();
-						console.log(coord);
+						_this.differ = _this.getDifferCoord();
+						console.log(_this.differ);
+						OpacityController.set(_this.differ);
 
 						// 画像を動かすクラスを呼び出す
 						}, 100);
@@ -79,7 +87,13 @@ module PullHeadImage {
 	}
 
 
+	export class DisplayImage {
 
+		constructor(public coord:number){
+
+		}
+
+	}
 
 
 	// get touch move y
@@ -102,10 +116,21 @@ module PullHeadImage {
 
 	// opacity controller
 	export class OpacityController {
-		constructor(){
-		}
-		set(num: number):void {
-			$('pullHeadImageBg').css('opacity',num);
+
+		static set(differ: number):void {
+
+			var opacitySize = (differ / 150);
+			$('#pullHeadImageBg').show();
+
+			if(opacitySize < 0){
+				return;
+			}
+
+			if(opacitySize > 0.85) {
+				opacitySize = 1;
+			}
+			consolo.log("opacityController");
+			$('#pullHeadImageBg').css('opacity', opacitySize);
 		}
 	}
 

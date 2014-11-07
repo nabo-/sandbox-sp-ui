@@ -19,7 +19,13 @@
 #pullHeadImageBg {
 	background-color: rgba(0,0,0,1);
 	opacity: 0;
+	-webkit-transition: opacity 400ms ease-in;
 	display: none;
+	width: 100%;
+	height : 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
 	z-index: 2;
 }
 .pullHeadImageItems {
