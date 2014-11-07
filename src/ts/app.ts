@@ -93,6 +93,10 @@ module PullHeadImage {
 
 		}
 
+		set():void {
+
+		}
+
 	}
 
 
@@ -113,7 +117,6 @@ module PullHeadImage {
 		// => close PhotoScreen mode
 
 
-
 	// opacity controller
 	export class OpacityController {
 
@@ -129,10 +132,12 @@ module PullHeadImage {
 			if(opacitySize > 0.85) {
 				opacitySize = 1;
 			}
-			consolo.log("opacityController");
+
+			console.log("opacityController");
 			$('#pullHeadImageBg').css('opacity', opacitySize);
 		}
 	}
+
 
 	// close PhotoScreen mode
 

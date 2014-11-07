@@ -81,6 +81,8 @@ var PullHeadImage;
         function DisplayImage(coord) {
             this.coord = coord;
         }
+        DisplayImage.prototype.set = function () {
+        };
         return DisplayImage;
     })();
     PullHeadImage.DisplayImage = DisplayImage;
@@ -101,15 +103,17 @@ var PullHeadImage;
         }
         OpacityController.set = function (differ) {
             var opacitySize = (differ / 150);
+            $('#pullHeadImageBg').show();
+
             if (opacitySize < 0) {
                 return;
             }
 
-            $('#pullHeadImageBg').show();
-
             if (opacitySize > 0.85) {
                 opacitySize = 1;
             }
+
+            console.log("opacityController");
             $('#pullHeadImageBg').css('opacity', opacitySize);
         };
         return OpacityController;

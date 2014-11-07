@@ -12,9 +12,11 @@
 }
 
 #pullHeadImage {
-	margin-top: -100px;
-	z-index: 3;
+	width:100%;
+	height:160px;
+	overflow: hidden;
 }
+
 
 #pullHeadImageBg {
 	background-color: rgba(0,0,0,1);
@@ -30,10 +32,10 @@
 }
 .pullHeadImageItems {
 	width: 100%;
-	height: 250px;
-	overflow: hidden;
+	transform: translateY(-100px);
+	-webkit-transition: transform 400ms ease-in;
+	z-index: 3;
 	background-color: #666;
-
 	img {
 		max-width: 100%;
 	}
