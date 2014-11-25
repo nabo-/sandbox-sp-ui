@@ -1,9 +1,9 @@
 {
-  "name": "smartphone_develop",
+  "name": "",
   "version": "0.0.1",
   "description": "",
   "main": "Gruntfile.js",
-  "author": "watanabe-ei",
+  "author": "",
   "dependencies": {},
   "devDependencies": {
     "assemble": "^0.4.41",
