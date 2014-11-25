@@ -4,59 +4,104 @@
 
 module PullHeadImage {
 
+
 	export class App {
-		constructor(){
+		public item:any
+		constructor(public targetId:string){
+			this.item = document.getElementById(targetId);
 			this.ready();
 		}
 
+<<<<<<< HEAD
 		// set object dom
+=======
+>>>>>>> da8a1e597d2e5160bfb2917c9593c897518f181c
 		ready():void {
+			var setTouchEvent = new SetTouchEvent(this.item);
 			$('body').append('<div id="pullHeadImageBg"></div>');
 
-			var test = new GetTouchCoord();
-			console.log(test.getDifferenceCoord());
 		}
 	}
 
-	// touch start したらイベントが動かないとだめ
+	export class SetTouchEvent {
 
-	// get touch start y
-	export class GetTouchCoord {
+		public startY: number;
+		public moveY: number;
+		public differ : number;
+		private timer:any;
 
-		public touchStartY:number;
-		public touchMoveY:number;
-		private item:any;
+		constructor(public item:any){
+			this.startY = 0;
+			this.moveY = 0;
+			this.differ = 0;
 
-		constructor(){
-			this.item = document.getElementById('pullHeadImage');
+			this.set();
+		}
+
+		set():void {
+			this.touchStart();
+			this.touchMove();
+			this.touchEnd();
 		}
 
 		touchStart():void {
 			var _this = this;
-			this.item.addEventListener('touchstart', function(event){
-				_this.touchStartY = event.touches[0].pageY;
-				});
+
+			this.item.addEventListener('touchstart', function(e){
+				_this.startY = e.changedTouches[0].pageY;
+				_this.setTimer();
+			});
 		}
 
 		touchMove():void {
 			var _this = this;
-			this.item.addEventListener('touchmove', function(event){
-				_this.touchMoveY = event.touches[0].pageY;
-				});
+
+			this.item.addEventListener('touchmove', function(e){
+				//event.preventDefault();
+				_this.moveY = e.changedTouches[0].pageY;
+			});
 		}
 
-		getDifferenceCoord():number {
+		touchEnd():void {
+			var _this = this;
+			var page = document.getElementById('page');
 
-			this.touchStart();
-			this.touchMove();
-
-			var difference:number = this.touchMoveY - this.touchStartY;
-			return difference;
+			page.addEventListener('touchend', function(e){
+				clearInterval(_this.timer);
+			});
 		}
 
+		getDifferCoord():number {
+			var coord = this.moveY - this.startY;
+			return coord;
+		}
+
+		setTimer():void {
+			var _this = this;
+
+			this.timer = setInterval(function(){
+
+						_this.differ = _this.getDifferCoord();
+						console.log(_this.differ);
+						OpacityController.set(_this.differ);
+
+						// 画像を動かすクラスを呼び出す
+						}, 100);
+		}
 	}
 
 
+	export class DisplayImage {
+
+		constructor(public coord:number){
+
+		}
+
+		set():void {
+
+		}
+
+	}
 
 
 	// get touch move y
@@ -76,42 +121,29 @@ module PullHeadImage {
 		// => close PhotoScreen mode
 
 
-
 	// opacity controller
 	export class OpacityController {
-		constructor(){
-		}
-		set(num: number):void {
-			$('pullHeadImageBg').css('opacity',num);
+
+		static set(differ: number):void {
+
+			var opacitySize = (differ / 150);
+			$('#pullHeadImageBg').show();
+
+			if(opacitySize < 0){
+				return;
+			}
+
+			if(opacitySize > 0.85) {
+				opacitySize = 1;
+			}
+
+			console.log("opacityController");
+			$('#pullHeadImageBg').css('opacity', opacitySize);
 		}
 	}
+
 
 	// close PhotoScreen mode
 
 
-
-
-
-	// export class PullController {
-	// 	private touchStartY:number;
-
-	// 	constructor(){
-	// 	}
-
-	// 	getTouchY():any {
-	// 		var touchStartY:number;
-	// 		var item = document.getElementById('pullHeadImage');
-
-	// 		item.addEventListener('touchstart', function(event){
-	// 			touchStartY = event.touches[0].pageY;
-	// 		});
-	// 		return touchStartY;
-	// 	}
-
-	// }
-
 }
-
-(function(){
-	var app = new PullHeadImage.App();
-	})();

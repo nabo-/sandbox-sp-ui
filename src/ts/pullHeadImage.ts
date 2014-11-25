@@ -6,5 +6,5 @@ module PullHeadImage {
 }
 
 (function(){
-	var pullHeadImage = new PullHeadImage.App();
+	var pullHeadImage = new PullHeadImage.App('pullHeadImage');
 })();
