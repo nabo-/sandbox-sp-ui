@@ -11,11 +11,6 @@ module PullHeadImage {
 			this.item = document.getElementById(targetId);
 			this.ready();
 		}
-
-<<<<<<< HEAD
-		// set object dom
-=======
->>>>>>> da8a1e597d2e5160bfb2917c9593c897518f181c
 		ready():void {
 			var setTouchEvent = new SetTouchEvent(this.item);
 			$('body').append('<div id="pullHeadImageBg"></div>');
